@@ -1,5 +1,7 @@
 #lang racket
 
+;; TODO: full program tests that use special predicates
+
 ;; tests for the logic-programming system
 
 (require rackunit "main.rkt" racket/generator)

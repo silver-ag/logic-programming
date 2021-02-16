@@ -1,9 +1,7 @@
 #lang scribble/manual
 
 @(require scribble/eval
-          (for-label racket)
-          (for-label racket/generator)
-          (for-label "main.rkt"))
+          (for-label racket racket/generator "main.rkt"))
 
 @(define example-eval (make-base-eval))
 @interaction-eval[#:eval example-eval
