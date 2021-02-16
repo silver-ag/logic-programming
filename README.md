@@ -1,6 +1,6 @@
 # logic programming for racket
 This is a library for racket that allows logic programming in a prolog-like language inside more general programs - knowledgebases are first-class objects
-that can be programmatically manipulated in racket, and then you make queries against them. Install with raco.
+that can be programmatically manipulated in racket, and then you make queries against them. Install with `raco pkg install logic-programming`, use with `(require logic-programming)`.
 
 ### language
 The language is, I believe, different from prolog in only three ways:
