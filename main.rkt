@@ -93,16 +93,17 @@
              (let/cc continuation (values attempt continuation))
              (values #f #f)))]
       [else
-       (if (equal? pred 'true)
-           (let/cc k (values vars k))
-           (let-values [[(new-vars new-pred unification-continuation)
-                         (get-unification pred
-                                          (map (λ (i) (make-unique i (unique-suffix-gen))) kb)
-                                          vars)]]
-             (if new-vars
-                 (let-values [[(next-query continuation) (query-internal new-pred kb new-vars)]]
-                   (if next-query (values next-query continuation) (unification-continuation #f #f)))
-                 (values #f #f))))]))
+       (case pred
+         [(true) (let/cc k (values vars k))]
+         [else
+          (let-values [[(new-vars new-pred unification-continuation)
+                        (get-unification pred
+                                         (map (λ (i) (make-unique i (unique-suffix-gen))) kb)
+                                         vars)]]
+            (if new-vars
+                (let-values [[(next-query continuation) (query-internal new-pred kb new-vars)]]
+                  (if next-query (values next-query continuation) (unification-continuation #f #f)))
+                (values #f #f)))])]))
   (if generator?
       (generator () (call-with-continuation-prompt ;; prompt isolates the effects of rewinding to only stuff inside it
                      (λ ()
