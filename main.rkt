@@ -52,7 +52,7 @@
 ;; Queries
 ;;;;
 
-(define (query pred kb [generator? #f] [trace? #f])
+(define (satisfy pred kb [generator? #f] [trace? #f])
   ;; return variable bindings required for pred to be true on kb or #f if none exist
   (define unique-suffix-gen ;; make a new one each query so we don't build up to really long suffixes over long runs
     (generator () (define (next-num n)
@@ -149,13 +149,32 @@
       [else pred]))
   (if vars
       (let [[relevant (filter variable? (flatten stmnt))]]
-        (filter (λ (x) (> (length (ec-eqvs x)) (if (ec-val x) 0 1))) ;; if no nonvariable value discard single-variable classes
-                (map (λ (v)
-                       (ec (filter (λ (x) (member x relevant))
-                                   (ec-eqvs v))
-                           (replace-vars vars (ec-val v))))
-                     (set->list vars))))
+        (apply set
+               (filter (λ (x) (> (length (ec-eqvs x)) (if (ec-val x) 0 1))) ;; if no nonvariable value discard single-variable classes
+                       (map (λ (v)
+                              (ec (filter (λ (x) (member x relevant))
+                                          (ec-eqvs v))
+                                  (replace-vars vars (ec-val v))))
+                            (set->list vars)))))
       #f))
+
+(define (query q kb [trace? #f])
+  ;; get one valid solution, or #f
+  (satisfy q kb #f trace?))
+
+(define (query-gen q kb [trace? #f])
+  ;; produce a generator that gets valid solutions and #f once it runs out
+  (satisfy q kb #t trace?))
+
+(define (query-all q kb [trace? #f])
+  ;; get a list of valid solutions. doesn't halt if there are infinitely many
+  (define (get-all g acc)
+    (let [[next (g)]]
+      (if next
+          (get-all g (cons next acc))
+          acc)))
+  (let [[gen (satisfy q kb #t trace?)]]
+    (reverse (get-all gen '()))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Vars Stored as Sets of Equivalence Classes
@@ -191,7 +210,12 @@
 ;; Provides
 ;;;;
 
-(provide query unify (struct-out ec))
+(provide query
+         query-gen
+         query-all
+         unify
+         variable?
+         (struct-out ec))
 
 ;; testing
 
