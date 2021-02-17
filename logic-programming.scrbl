@@ -12,11 +12,11 @@
 The @racket[logic-programming] library provides a prolog-like language that can be used within
 racket programs. Both queries and knowledgebases are s-expressions that can be manipulated programmatically,
 rather than having a single knowledgebase. The library is intended for racket programs that just need to do a bit
-of logic, rather than for writing full programs in the provided language. See also @other-doc['(lib "parenlog/scribblings/parenlog.scrbl")],
+of logic, rather than for writing full programs in the provided language. See also @other-doc['(lib "parenlog/parenlog.scrbl")],
 which puts less focus on programmatic modification of knowledgebases.
 
 @section[#:tag "example"]{Example of Use}
-Take the 'hello world' of formal logic:
+Take the `hello world' of formal logic:
 
 1. Socrates is a man
 
@@ -114,8 +114,8 @@ For use, see @secref["example"].
 
 @subsection{syntax}
 An s-expression syntax is used. Facts and Queries are written @racket['(predicate-name arg1 ... argn)], and
-Rules are written @racket['(:- (predicate-name arg1 ... argn) body)], where body is a Fact (using ','
-and ';' for 'and' and 'or' is not possible, a Rule might look like @racket['(:- (p X) (and (q X) (r X)))]).
+Rules are written @racket['(:- (predicate-name arg1 ... argn) body)], where body is a Fact (using `,'
+and `;' for `and' and `or' is not possible, a Rule might look like @racket['(:- (p X) (and (q X) (r X)))]).
 Don't forget to quote literal sections of this code before using it, there's no binding provided for
 @italic{:-} or anything.
 
@@ -125,6 +125,6 @@ There are only five defined predicates (or six if you count @italic{:-}):
           @item{@italic{or}: @racket['(or p q)] is like @italic{p;q} in prolog}
           @item{@italic{unprovable}: equivalent to prolog's @italic{not}.
            WARNING: if you're not familiar with it, prolog's @italic{not} can be fairly unintuitive. Hopefully @racket[unprovable] better expresses what's meant by it.}
-          @item{@italic{\=}: equivalent to prolog's @italic{\=}. The double slash is because racket allows backslash escapes in symbols, so without it it'd be the same as @italic{=}}
+          @item{@italic{\\=}: equivalent to prolog's @italic{\=}. The double slash is because racket allows backslash escapes in symbols, so without it it'd be the same as @italic{=}}
           @item{@italic{=}: equivalent to prolog's @italic{=}. If it weren't defined by default, it could be produced by adding @racket['(= X X)] to a knowledgebase.}]
 Note especially that @italic{!} is missing from this list, no cut is provided.
