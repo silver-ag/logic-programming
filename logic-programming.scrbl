@@ -1,7 +1,7 @@
 #lang scribble/manual
 
 @(require scribble/eval
-          (for-label racket racket/generator parenlog web-server "main.rkt"))
+          (for-label racket racket/generator web-server "main.rkt"))
 
 @(define example-eval (make-base-eval))
 @interaction-eval[#:eval example-eval
