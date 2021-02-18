@@ -1,7 +1,7 @@
 #lang scribble/manual
 
 @(require scribble/eval
-          (for-label racket racket/generator "main.rkt"))
+          (for-label racket racket/generator parenlog web-server "main.rkt"))
 
 @(define example-eval (make-base-eval))
 @interaction-eval[#:eval example-eval
@@ -12,7 +12,7 @@
 The @racket[logic-programming] library provides a prolog-like language that can be used within
 racket programs. Both queries and knowledgebases are s-expressions that can be manipulated programmatically,
 rather than having a single knowledgebase. The library is intended for racket programs that just need to do a bit
-of logic, rather than for writing full programs in the provided language. See also @other-doc['(lib "parenlog/parenlog.scrbl")],
+of logic, rather than for writing full programs in the provided language. See also the Parenlog package,
 which puts less focus on programmatic modification of knowledgebases.
 
 @section[#:tag "example"]{Example of Use}
